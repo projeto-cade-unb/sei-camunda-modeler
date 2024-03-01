@@ -1,11 +1,17 @@
 # sei-camunda-modeler
 Plugin de Integração do Camunda Modeler com o SEI.
-
 Plugin acessório para uso do Camunda BPM Plataform integrado ao SEI.
+
+## Objetivo
+ - Modelador com funcionalidades simplificadoras para analistas de negócio.
+ - Integração com API SEI (Grupos, Usuários, Processos, Documentos, etc)
 
 
 ## Funcionalidades
-O Plugin se conecta a um modulo personalizado de API desenvolvido no SEI que expoem alguns objetos 
+O Plugin se conecta a um modulo personalizado de API desenvolvido no SEI que expoem alguns objetos.
+
+<img src="documentation/images/screen-login-sei.png">
+
 
 ## User Task
 As User Task podem selecionar alguns parametros do BPMN direto do SEI.
@@ -36,8 +42,3 @@ Permite selecionar o Processo do SEI
 ## Documento SEI de Início.
 - Lista de Documentos do SEI via API REST
 Quando Selecionado Id = Deve ser o calculo de SEI_IdTipoProcesso_IddoDocumentoSEI.
-
-
-
-
-
