@@ -1,7 +1,7 @@
 {
-  "name": "request-list-plugin",
-  "version": "0.1.0",
-  "description": "Requisita uma lista de repositórios do github",
+  "name": "sei-camunda-modeler",
+  "version": "0.2.0",
+  "description": "Integra o Camunda Modeler com API do SEI para mapeamento de processos integrados",
   "main": "index.js",
   "scripts": {
     "all": "run-s bundle",
@@ -17,8 +17,8 @@
     "modeler",
     "plugin"
   ],
-  "author": "Denisson Almeida",
-  "license": "MIT",
+  "author": "Denisson Almeida e Marcio Junior Vieira",
+  "license": "Apache 2.0",
   "devDependencies": {
     "@babel/core": "^7.13.16",
     "@babel/preset-react": "^7.13.13",
