@@ -1,0 +1,60 @@
+.input-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 0 3em;
+}
+
+.search-input {
+  font-size: 20px;
+  padding: 0.5rem 1rem;
+  border: 1px solid #cccccc;
+  width: 100%;
+}
+
+.bpp-textfield input.with-search {
+  padding-right: 50px;
+}
+
+.bpp-textfield button.bpp-hidden ~ .open-search {
+  right: 0 !important;
+}
+
+.repo-list {
+  list-style: none;
+  overflow: auto;
+  max-height: 25vh;
+  margin: 0 3em;
+  padding: 0;
+  margin-top: 1em;
+}
+
+li.repo-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em;
+  align-items: center;
+  font-size: 14px;
+}
+
+li.repo-item:hover {
+  background-color: #ecf0f1;
+}
+
+.tipo-doc-info {
+  padding: 0.5rem;
+  background-color: #a9e9fd;
+  border-radius: 4px;
+  margin: 0.5rem 0;
+}
+
+.tipo-doc-info:empty {
+  display: none;
+}
+
+.btn-danger {
+  color: #fdfdfe;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+  border: solid 1px darkRed;
+  background-color: darkRed;
+}
