@@ -7,6 +7,32 @@ Plugin acessório para uso do Camunda BPM Plataform integrado ao SEI.
  - Integração com API SEI (Grupos, Usuários, Processos, Documentos, etc)
 
 
+## Instalação
+
+### Requisitos
+ Camunda Modeler 4.8.
+ Download em https://downloads.camunda.cloud/release/camunda-modeler/4.8.1/camunda-modeler-4.8.1-linux-x64.tar.gz
+
+### Passo a Passo de instalação.
+1) Acesse  seção de realeases (https://github.com/projeto-cade-unb/sei-camunda-modeler/releases) e baixe o arquivo sei-camunda-modeler.zip 
+2) Descompacte o arquivo  sei-camunda-modeler.zip  no direório de plugins do Camunda Modeler
+   <installdirmodeler>resources/plugins/
+3) Inicie o Camunda Modeler.
+
+
+## Como Usar 
+
+#### Requisitos
+Ter um SEI instalado com o modulo de API Camunda SEI.
+
+### Passo a Passo
+
+1) Acesse na barra inferior o "Configuração SEI"
+2) Informa a URL do SEI.
+3) Clique no icone SEI na barra superior.
+4) Informe usuário e senha de autenticação no SEI. 
+
+
 ## Funcionalidades
 O Plugin se conecta a um modulo personalizado de API desenvolvido no SEI que expoem alguns objetos.
 
