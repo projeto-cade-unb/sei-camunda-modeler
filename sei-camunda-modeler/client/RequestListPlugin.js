@@ -18,7 +18,7 @@ const TIP_PROC_REG = /(SEI_(\d*))/i;
 // const API_ROOT = 'https://unb-sei.cade.gov.br/sei/modulos/api-modeler/controlador_externo.php?acao=';
 const API_ROOT = 'https://dev-sei.cade.gov.br/sei/modulos/api-modeler/controlador_externo.php?acao=';
 
-const API_ROOT = '/modulos/api-modeler/controlador_externo.php?acao=';
+//const API_ROOT = '/modulos/api-modeler/controlador_externo.php?acao=';
 const API_LIST_DOC = `${API_ROOT}sistema_tipodocumento`;
 const API_LIST_USERS = `${API_ROOT}sistema_usuario`;
 const API_LIST_GROUPS = `${API_ROOT}sistema_cargo`;

@@ -68,3 +68,10 @@ Permite selecionar o Processo do SEI
 ## Documento SEI de Início.
 - Lista de Documentos do SEI via API REST
 Quando Selecionado Id = Deve ser o calculo de SEI_IdTipoProcesso_IddoDocumentoSEI.
+
+
+
+## Build
+
+export NODE_OPTIONS=--openssl-legacy-provider
+npm run all
