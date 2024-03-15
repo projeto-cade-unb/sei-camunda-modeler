@@ -72,6 +72,7 @@ Quando Selecionado Id = Deve ser o calculo de SEI_IdTipoProcesso_IddoDocumentoSE
 
 
 ## Build
+cd sei-camunda-modeler
 
 export NODE_OPTIONS=--openssl-legacy-provider
 npm run all
