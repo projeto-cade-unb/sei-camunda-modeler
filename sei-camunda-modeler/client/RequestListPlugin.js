@@ -9,16 +9,16 @@ import ConfigSei from './modal/ConfigSei';
 
 const STR_ID = 'request-plugin-';
 
-const TYPES = ["bpmn:UserTask", "bpmn:Process", "bpmn:Collaboration"]
+const TYPES = ["bpmn:Participant", "bpmn:UserTask"]
 
 const TIP_DOC_REG = /(Activity_([a-zA-Z]+)_(\d*))/i;
 const TIP_PROC_REG = /(SEI_(\d*))/i;
 
 
 // const API_ROOT = 'https://unb-sei.cade.gov.br/sei/modulos/api-modeler/controlador_externo.php?acao=';
-const API_ROOT = 'https://dev-sei.cade.gov.br/sei/modulos/api-modeler/controlador_externo.php?acao=';
+// const API_ROOT = 'https://dev-sei.cade.gov.br/sei/modulos/api-modeler/controlador_externo.php?acao=';
 
-//const API_ROOT = '/modulos/api-modeler/controlador_externo.php?acao=';
+const API_ROOT = '/modulos/api-modeler/controlador_externo.php?acao=';
 const API_LIST_DOC = `${API_ROOT}sistema_tipodocumento`;
 const API_LIST_USERS = `${API_ROOT}sistema_usuario`;
 const API_LIST_GROUPS = `${API_ROOT}sistema_cargo`;
@@ -130,6 +130,12 @@ function buildTipoDocInfo() {
   return div;
 }
 
+function buildProcessInfo() {
+  const div = document.createElement("div");
+  div.classList.add("process-info");
+  return div;
+}
+
 export default class RequestListPlugin extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -175,11 +181,12 @@ export default class RequestListPlugin extends React.PureComponent {
     this.onSelectType = this.onSelectType.bind(this);
 
     this.tipoDocDiv = null;
+    this.processDiv = null;
   }
 
   async updateProcessTypeName() {
 
-    const camundaId = document.querySelector('#camunda-id');
+    const camundaId = document.querySelector('#camunda-process-id');
     const value = camundaId.value;
 
     const match = TIP_PROC_REG.exec(value);
@@ -194,7 +201,7 @@ export default class RequestListPlugin extends React.PureComponent {
         name = process.titulo;
       }
 
-      this.updateTipoDocInfo(number, name || "[Desconhecido]");
+      this.updateProcessInfo(number, name || "[Desconhecido]");
     }
   }
 
@@ -209,7 +216,7 @@ export default class RequestListPlugin extends React.PureComponent {
       const number = match[3];
       let name = localStorage.getItem(number);
       if (!name) {
-        const data = await requestListaTipoProcessos();
+        const data = await requestListaTipoDocumento();
 
         const tipoDoc = data.find(doc => doc.id == number);
         name = tipoDoc.titulo;
@@ -224,6 +231,11 @@ export default class RequestListPlugin extends React.PureComponent {
     this.tipoDocDiv.innerHTML = `${id} - ${value}`;
   }
 
+  updateProcessInfo(id, value) {
+    localStorage.setItem(String(id), value);
+    this.processDiv.innerHTML = `${id} - ${value}`;
+  }
+
   createTipoDocInfo() {
     const parent = document.querySelector("label[for=camunda-id]").parentElement;
     const elementId = `${STR_ID}tipodoc-div`;
@@ -232,6 +244,17 @@ export default class RequestListPlugin extends React.PureComponent {
       this.tipoDocDiv = buildTipoDocInfo();
       this.tipoDocDiv.id = elementId;
       parent.append(this.tipoDocDiv);
+    }
+  }
+
+  createProcessInfo() {
+    const parent = document.querySelector("label[for=camunda-process-id]").parentElement;
+    const elementId = `${STR_ID}process-div`;
+
+    if (!parent.querySelector(`#${elementId}`)) {
+      this.processDiv = buildProcessInfo();
+      this.processDiv.id = elementId;
+      parent.append(this.processDiv);
     }
   }
 
@@ -251,9 +274,9 @@ export default class RequestListPlugin extends React.PureComponent {
 
   createProcessSearchButton() {
     const button = buildSearchButton();
-    button.id = `${STR_ID}search-button`;
+    button.id = `${STR_ID}process-search-button`;
 
-    const camundaId = document.querySelector('#camunda-id');
+    const camundaId = document.querySelector('#camunda-process-id');
     if (!camundaId.querySelector(`#${button.id}`)) { // Previne que sejam adicionados elementos que já existem
       camundaId.classList.add('with-search');
       camundaId.parentElement.appendChild(button);
@@ -265,7 +288,7 @@ export default class RequestListPlugin extends React.PureComponent {
 
   createCandidateUserSearchButton() {
     const button = buildSearchButton();
-    button.id = `${STR_ID}-candidate-users-search-button`;
+    button.id = `${STR_ID}candidate-users-search-button`;
 
     const camundaId = document.querySelector('#camunda-candidateUsers');
     if (camundaId && !camundaId.querySelector(`#${button.id}`)) { // Previne que sejam adicionados elementos que já existem 
@@ -279,7 +302,7 @@ export default class RequestListPlugin extends React.PureComponent {
 
   createLoginSearchButton() {
     const button = buildSearchButton();
-    button.id = `${STR_ID}-login-search-button`;
+    button.id = `${STR_ID}login-search-button`;
     const camundaId = document.querySelector('#camunda-candidateStarterUsers');
     if (camundaId && !camundaId.querySelector(`#${button.id}`)) { // Previne que sejam adicionados elementos que já existem 
       camundaId.classList.add('with-search');
@@ -292,7 +315,7 @@ export default class RequestListPlugin extends React.PureComponent {
 
   createCandidateGroupSearchButton() {
     const button = buildSearchButton();
-    button.id = `${STR_ID}-candidate-group-search-button`;
+    button.id = `${STR_ID}candidate-group-search-button`;
 
     const camundaId = document.querySelector('#camunda-candidateGroups');
     if (camundaId && !camundaId.querySelector(`#${button.id}`)) { // Previne que sejam adicionados elementos que já existem 
@@ -306,7 +329,7 @@ export default class RequestListPlugin extends React.PureComponent {
 
   createCandidateAssigneeSearchButton() {
     const button = buildSearchButton();
-    button.id = `${STR_ID}-assignee-search-button`;
+    button.id = `${STR_ID}assignee-search-button`;
 
     const camundaId = document.querySelector('#camunda-assignee');
     if (camundaId && !camundaId.querySelector(`#${button.id}`)) { // Previne que sejam adicionados elementos que já existem 
@@ -329,16 +352,17 @@ export default class RequestListPlugin extends React.PureComponent {
       modeler.on('propertiesPanel.changed', ({ current: { element } }) => {
 
         if (TYPES.includes(element.type)) {
-          this.createTipoDocInfo();
-
-          if (element.type == 'bpmn:Process') {
+       
+          if (element.type == 'bpmn:Participant') {
+            this.createProcessInfo();
             this.createProcessSearchButton();
             this.updateProcessTypeName();
           } else {
+            this.createTipoDocInfo();
             this.createSearchButton();
             this.updateDocTypeName();
           }
-
+       
           this.createCandidateUserSearchButton();
           this.createCandidateGroupSearchButton();
           this.createCandidateAssigneeSearchButton();
@@ -475,10 +499,10 @@ export default class RequestListPlugin extends React.PureComponent {
   }
 
   setIdProcess(id, value) {
-    const camundaId = document.querySelector('#camunda-id');
+    const camundaId = document.querySelector('#camunda-process-id');
     camundaId.value = `SEI_${id}`.replace('/', '_');
 
-    this.updateTipoDocInfo(id, value);
+    this.updateProcessInfo(id, value);
 
     const e = new Event('change', {
       'bubbles': true,

@@ -52,6 +52,17 @@ li.repo-item:hover {
   display: none;
 }
 
+.process-info {
+  padding: 0.5rem;
+  background-color: #a9e9fd;
+  border-radius: 4px;
+  margin: 0.5rem 0;
+}
+
+.process-info:empty {
+  display: none;
+}
+
 .btn-danger {
   color: #fdfdfe;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
