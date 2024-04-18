@@ -14,9 +14,6 @@ export default function CandidateGroupsModal({ groups, setFilter, setCandidateGr
         Lista de Cargos
       </Title>
       <Body>
-        <div className="input-container">
-          <input type="text" onInput={setFilter} className="search-input form-control" id="search-input" style={{ zIndex: 2000 }} />
-        </div>
         <ul className="repo-list" onClick={setCandidateGroup}>
           {groups.map(({ id, titulo }) => (
             <li className="repo-item" key={id} data-id={id} data-value={titulo}>

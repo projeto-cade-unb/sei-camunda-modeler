@@ -8,23 +8,25 @@ const Body = Modal.Body || (({ children }) => <div>{children}</div>);
 const Footer = Modal.Footer || (({ children }) => <div>{children}</div>);
 
 
-export default function AssigneeModal({ assignees, setFilter, setAssignee, onClose }) {
+export default function AssigneeModal({ assignees, setFilter, setAssignee, onClose, selectedAssignees }) {
   return (
     <Fragment>
       <Title>
-        Lista de Cargos
+      Lista de Usuários
       </Title>
       <Body>
-        <div className="input-container">
-          <input type="text" onInput={setFilter} className="search-input form-control" id="search-input" style={{ zIndex: 2000 }} />
-        </div>
         <ul className="repo-list" onClick={setAssignee}>
-          {assignees.map(({ id, cargo }) => (
-            <li className="repo-item" key={id} data-id={id} data-value={cargo}>
-              <span>{cargo}</span>
-              <button className="btn-select-repo btn-primary btn-sm">
-                &#8658;
-              </button>
+          {assignees.map(({ id, nome, sigla }) => (
+            <li className="repo-item" key={id} data-id={id} data-value={nome}>
+              <strong>{sigla}</strong><span>{nome}</span>
+              {selectedAssignees.find(user => user === sigla) ? (
+                <button className="btn-select-repo btn-danger btn-sm">
+                  x
+                </button>) : (
+                <button className="btn-select-repo btn-primary btn-sm">
+                  &#8658;
+                </button>
+              )}
             </li>
           ))}
         </ul>

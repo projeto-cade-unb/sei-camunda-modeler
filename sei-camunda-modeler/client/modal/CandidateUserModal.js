@@ -15,12 +15,9 @@ export default function CandidateUserModal({ users, setFilter, setCandidateUser,
         Lista de Usuários
       </Title>
       <Body>
-        <div className="input-container">
-          <input type="text" onInput={setFilter} className="search-input form-control" id="search-input" style={{ zIndex: 2000 }} />
-        </div>
         <ul className="repo-list" onClick={setCandidateUser}>
           {users.map(({ id, nome, sigla }) => (
-            <li className="repo-item" key={id} data-id={id} data-value={sigla}>
+            <li className="repo-item" key={id} data-id={id} data-value={nome}>
               <strong>{sigla}</strong><span>{nome}</span>
               {selectedUsers.find(user => user === sigla) ? (
                 <button className="btn-select-repo btn-danger btn-sm">

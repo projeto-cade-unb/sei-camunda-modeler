@@ -8,18 +8,15 @@ const Body = Modal.Body || (({ children }) => <div>{children}</div>);
 const Footer = Modal.Footer || (({ children }) => <div>{children}</div>);
 
 
-export default function ProcessModal({ docs, setFilter, setSelected, onClose }) {
+export default function ProcessModal({ procs, setFilter, setSelected, onClose }) {
   return (
     <Fragment>
       <Modal.Title>
         Tipo de processo
       </Modal.Title>
       <Modal.Body>
-        <div className="input-container">
-          <input type="text" onInput={setFilter} className="search-input form-control" id="search-input" style={{ zIndex: 2000 }} />
-        </div>
         <ul className="repo-list" onClick={setSelected}>
-          {docs.map(({ id, titulo }) => (
+          {procs.map(({ id, titulo }) => (
             <li className="repo-item" key={id} data-id={id} data-value={titulo}>
               <span>{titulo}</span>
               <button className="btn-select-repo btn-primary btn-sm">

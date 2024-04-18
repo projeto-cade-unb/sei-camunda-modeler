@@ -7,7 +7,6 @@ const Title = Modal.Title || (({ children }) => <h2>{children}</h2>);
 const Body = Modal.Body || (({ children }) => <div>{children}</div>);
 const Footer = Modal.Footer || (({ children }) => <div>{children}</div>);
 
-
 export default function TipdocModal({ docs, setFilter, setSelected, onClose, onSelectType, documentTypeIsSelect }) {
   return (
     <Fragment>
@@ -17,9 +16,6 @@ export default function TipdocModal({ docs, setFilter, setSelected, onClose, onS
       <Modal.Body>
         {documentTypeIsSelect && (
           <>
-            <div className="input-container">
-              <input type="text" onInput={setFilter} className="search-input form-control" id="search-input" style={{ zIndex: 2000 }} />
-            </div>
             <ul className="repo-list" onClick={setSelected}>
               {docs.map(({ id, titulo }) => (
                 <li className="repo-item" key={id} data-id={id} data-value={titulo}>
@@ -48,11 +44,6 @@ export default function TipdocModal({ docs, setFilter, setSelected, onClose, onS
             <div>
               <label onClick={() => onSelectType('Publica')}>
                 <input type="radio" name="tipoDoc" /> Publicação
-              </label>
-            </div>
-            <div>
-              <label onClick={() => onSelectType('Anexo')}>
-                <input type="radio" name="tipoDoc" /> Anexo
               </label>
             </div>
           </>

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'camunda-modeler-plugin-helpers/react';
 import { Modal, Fill } from 'camunda-modeler-plugin-helpers/components';
 import CandidateUserModal from './modal/CandidateUserModal';
+import AssigneeModal from './modal/AssigneeModal';
 import TipdocModal from './modal/TipdocModal';
 import CandidateGroupsModal from './modal/CandidateGroupsModal';
 import LoginModal from './modal/LoginModal';
@@ -140,6 +141,8 @@ export default class RequestListPlugin extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    this.inputFiltro = React.createRef();
+
     this.loadingIcon = LoadingIcon;
     this.state = {
       showModal: false,
@@ -162,8 +165,12 @@ export default class RequestListPlugin extends React.PureComponent {
     this.setIdContent = this.setIdContent.bind(this);
     this.setIdProcess = this.setIdProcess.bind(this);
     this.selectContent = this.selectContent.bind(this);
+    this.setContentFilter = this.setContentFilter.bind(this);
     this.selectProcess = this.selectProcess.bind(this);
+    this.setProcessFilter = this.setProcessFilter.bind(this);
+    this.setAssignee = this.setAssignee.bind(this);
     this.selectAssignee = this.selectAssignee.bind(this);
+    this.setAssigneeFilter = this.setAssigneeFilter.bind(this);
 
     this.setCandidateUser = this.setCandidateUser.bind(this);
     this.selectCandidateUser = this.selectCandidateUser.bind(this);
@@ -350,7 +357,7 @@ export default class RequestListPlugin extends React.PureComponent {
       const { modeler } = event;
 
       modeler.on('propertiesPanel.changed', ({ current: { element } }) => {
-
+        
         if (TYPES.includes(element.type)) {
        
           if (element.type == 'bpmn:Participant') {
@@ -373,6 +380,9 @@ export default class RequestListPlugin extends React.PureComponent {
   }
 
   async componentDidUpdate(_, prevState) {
+    if (prevState.documentType != '') {
+      this.state.documentType = '';
+    }
     if (!prevState.showModal && this.state.showModal) {
 
       let usersData = [];
@@ -408,6 +418,7 @@ export default class RequestListPlugin extends React.PureComponent {
         data,
         filteredData: data,
         usersData,
+        filteredProcess: processData,
         filteredUsers: usersData,
         groupData,
         filteredGroups: groupData,
@@ -520,6 +531,18 @@ export default class RequestListPlugin extends React.PureComponent {
     }
   }
 
+  setContentFilter(e) {
+    const filter = e.target.value;
+    const { data } = this.state;
+
+    let filteredData = data;
+
+    if (filter) {
+      filteredData = data.filter(d => d.titulo.toLowerCase().includes(filter.toLowerCase()));
+    }
+    this.setState({ filteredData });
+  }
+
   selectProcess(e) {
     const target = e.target;
     if (target.classList.contains('btn-select-repo')) {
@@ -527,6 +550,18 @@ export default class RequestListPlugin extends React.PureComponent {
       this.setIdProcess(parent.dataset['id'], parent.dataset['value']);
       this.closeModal();
     }
+  }
+
+  setProcessFilter(e) {
+    const filter = e.target.value;
+    const { processData } = this.state;
+
+    let filteredProcess = processData;
+
+    if (filter) {
+      filteredProcess = processData.filter(d => d.titulo.toLowerCase().includes(filter.toLowerCase()));
+    }
+    this.setState({ filteredProcess });
   }
 
   setAssignee(value) {
@@ -548,6 +583,18 @@ export default class RequestListPlugin extends React.PureComponent {
       this.setAssignee(parent.dataset['value']);
       this.closeModal();
     }
+  }
+
+  setAssigneeFilter(e) {
+    const filter = e.target.value;
+    const { assigneeData } = this.state;
+
+    let filteredAssignee = assigneeData;
+
+    if (filter) {
+      filteredAssignee = usersData.filter(d => d.nome.toLowerCase().includes(filter.toLowerCase()));
+    }
+    this.setState({ filteredAssignee });
   }
 
   selectCandidateUser(e) {
@@ -634,12 +681,12 @@ export default class RequestListPlugin extends React.PureComponent {
 
   setCandidateGroupFilter(e) {
     const filter = e.target.value;
-    const { groupsData } = this.state;
+    const { groupData } = this.state;
 
-    let filteredGroups = groupsData;
+    let filteredGroups = groupData;
 
     if (filter) {
-      filteredGroups = groupsData.filter(d => d.nome.toLowerCase().includes(filter.toLowerCase()));
+      filteredGroups = groupData.filter(d => d.titulo.toLowerCase().includes(filter.toLowerCase()));
     }
 
     this.setState({ filteredGroups });
@@ -649,25 +696,25 @@ export default class RequestListPlugin extends React.PureComponent {
     this.setState({ documentType: type });
   }
 
-  renderTipDocModal(data) {
+  renderTipDocModal() {
     const { filteredData = [] } = this.state;
 
     return <TipdocModal
       docs={filteredData}
-      setFilter={this.setFilter}
+      setFilter={this.setContentFilter}
       setSelected={this.selectContent}
       onClose={this.closeModal}
-      onSelectType={this.onSelectType}
+      onSelectType={this.onSelectType} 
       documentTypeIsSelect={this.state.documentType}
     />;
   }
 
-  renderProcessModal(data) {
-    const { processData = [] } = this.state;
+  renderProcessModal() {
+    const { filteredProcess = [] } = this.state;
 
     return <ProcessModal
-      docs={processData}
-      setFilter={this.setFilter}
+      procs={filteredProcess}
+      setFilter={this.setProcessFilter}
       setSelected={this.selectProcess}
       onClose={this.closeModal}
     />
@@ -695,15 +742,14 @@ export default class RequestListPlugin extends React.PureComponent {
   }
 
   renderAssigneeModal() {
-    const { filteredAssignee = [] } = this.state;
-    const selectedUsers = [];
-
-    return <CandidateUserModal
-      users={filteredAssignee}
-      setFilter={this.setCandidateUserFilter}
-      setCandidateUser={this.selectAssignee}
+    const { filteredAssignee = [], selectedAssignees = [] } = this.state;
+  
+    return <AssigneeModal
+      assignees={filteredAssignee}
+      setFilter={this.setAssigneeFilter}
+      setAssignee={this.selectAssignee}
       onClose={this.closeModal}
-      selectedUsers={ selectedUsers }
+      selectedAssignees={selectedAssignees}
     />
   }
 
@@ -803,6 +849,7 @@ export default class RequestListPlugin extends React.PureComponent {
 
   renderModal() {
     const { modalType } = this.state;
+
     switch (modalType) {
       case MODAL_TYPE.listDoc:
         return this.renderTipDocModal();
@@ -846,5 +893,10 @@ export default class RequestListPlugin extends React.PureComponent {
             {this.renderModal()}
           </Modal>}
       </Fragment>);
+  }
+
+  focus() {
+    // Focalize a entrada de texto usando a API DOM
+    this.inputFiltro.current.focus();
   }
 }
