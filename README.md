@@ -1,4 +1,6 @@
 # sei-camunda-modeler
+[![Compatible with Camunda Modeler version 4](https://img.shields.io/badge/Modeler_Version-4.9.0-blue.svg)](./README.md#compatibility-notice)
+
 Plugin de Integração do Camunda Modeler com o SEI.
 Plugin acessório para uso do Camunda BPM Plataform integrado ao SEI.
 
