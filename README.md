@@ -33,7 +33,7 @@ Ainda não compativel com Camunda Modeler 5.0 ou superior.
 ## Como Usar 
 
 #### Requisitos
-Ter um SEI instalado com o modulo de API Camunda SEI.
+Ter um SEI instalado com o modulo de API Camunda SEI (https://github.com/projeto-cade-unb/sei-camunda-modeler/tree/main/modulos/api-modeler)
 
 ### Passo a Passo
 
