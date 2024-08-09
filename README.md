@@ -7,6 +7,7 @@ Plugin acessório para uso do Camunda BPM Plataform integrado ao SEI.
 ## Objetivo
  - Modelador com funcionalidades simplificadoras para analistas de negócio.
  - Integração com API SEI (Grupos, Usuários, Processos, Documentos, etc)
+    * https://github.com/projeto-cade-unb/sei-camunda-modeler/tree/main/modulos/api-modeler
 
 
 ## Instalação
