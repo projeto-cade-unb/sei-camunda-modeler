@@ -1,6 +1,6 @@
 ## Api de integração com SEI
 
-Este modulo foi desenvolvido para fornecer uma resposta de API baseada em JSON REST FULL. O Mesmo é uma tradução de APIs SOAP/XML para JSON.
+Este modulo foi desenvolvido para fornecer uma resposta de API baseada em JSON REST FULL. O Mesmo é uma tradução de APIs SOAP/XML do SEI para JSON.
 
 ### Endpoints
 
